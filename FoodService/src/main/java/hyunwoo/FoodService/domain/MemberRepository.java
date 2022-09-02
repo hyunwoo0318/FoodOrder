@@ -33,11 +33,8 @@ public class MemberRepository {
     //로그인아이디로 회원정보 알아내기
     //TODO : 찾을 수 없을때 예외처리하기.
     public Optional<Member> findByLoginId(String loginId){
-
         return findAll().stream().filter(m -> m.getLoginId().equals(loginId))
                 .findFirst();
     }
-
-
 
 }

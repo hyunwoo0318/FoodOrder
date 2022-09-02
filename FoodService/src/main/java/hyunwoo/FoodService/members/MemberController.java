@@ -1,4 +1,4 @@
-package hyunwoo.FoodService;
+package hyunwoo.FoodService.members;
 
 import hyunwoo.FoodService.domain.Member;
 import hyunwoo.FoodService.domain.MemberRepository;
@@ -11,23 +11,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
-public class WebController {
+//회원가입을 위한 컨트롤러
+public class MemberController {
 
     MemberRepository memberRepository = new MemberRepository();
 
-    @GetMapping("/loginHome")
-    public String loginHome(){
-        return "loginHome";
+    //회원가입화면
+    @GetMapping("/members/add")
+    public String getAdd(Model model) {
+        model.addAttribute("member", new Member());
+        return "members/add";
     }
 
-    @GetMapping("/makeOrder")
-    public String storeList(){
-        return "order/storeList";
+    @PostMapping("/members/add")
+    public String postAdd(@ModelAttribute Member member){
+        memberRepository.newMember(member);
+        return "redirect:/";
     }
-
-    @GetMapping("/myPastOrder")
-    public String orderList(){
-        return "info/orderList";
-    }
-
 }
