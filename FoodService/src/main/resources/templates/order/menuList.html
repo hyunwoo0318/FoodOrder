@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<h2>메뉴 리스트</h2>
+<table>
+    <th>메뉴이름</th>
+    <th>가격</th>
+    <tr th:each="menu : ${menuList}">
+        <td th:text="${menu.menuName}"></td>
+        <td th:text="${menu.price}"></td><br>
+    </tr>
+</table>
+</body>
+</html>

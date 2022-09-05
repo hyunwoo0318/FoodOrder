@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-음식점 내역입니다.
+<h2>음식점 리스트</h2>
+<table>
+    <th>음식점이름</th>
+    <th>위치</th>
+
+<tr th:each="foodStore : ${foodStores}">
+    <td>
+        <li><a th:href="@{/makeorder/{storeName}(storeName=${foodStore.storeName})}"
+            th:text="${foodStore.storeName}"></a></li>
+    </td>
+    <td th:text="${foodStore.pos}">위치</td><br>
+</tr>
+</table>
 </body>
 </html>
