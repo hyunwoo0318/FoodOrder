@@ -11,5 +11,5 @@ public class OrderRecord {
     private final String name;
     private final String storeName;
     private final String date;
-    private final List<String> orderedMenu;
+    private final List<Menu> orderedMenu;
 }

@@ -13,6 +13,10 @@ public class FoodStore {
 
     private Long id;
 
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
+    }
+
     public FoodStore(String storeName, String pos, List<Menu> menuList) {
         this.storeName = storeName;
         this.pos = pos;

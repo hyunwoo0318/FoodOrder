@@ -7,13 +7,20 @@
 </head>
 <body>
 <h2>메뉴 리스트</h2>
-<table>
-    <th>메뉴이름</th>
-    <th>가격</th>
-    <tr th:each="menu : ${menuList}">
-        <td th:text="${menu.menuName}"></td>
-        <td th:text="${menu.price}"></td><br>
-    </tr>
+<div>
+   <div>메뉴이름</div>
+        <div th:each="menu : ${menuList}" class="form-check form-check-inline">
+            <input type="checkbox" th:field="*{menuList}" th:value="${menu.menuName}"
+               class="form-check-input">
+            <label th:for="${#ids.prev('menu')}"
+                    th:text="${menu.menuName}" class="form-check-label">치킨</label>
+        </div>
+    <div>가격</div>
+    <div th:each="menu:${menuList}">
+        <div th:text="${menu.price}">가격</div>
+    </div>
+</div>
+    <button type="submit" href="/ordercheck">주문 완료</button>
 </table>
 </body>
 </html>

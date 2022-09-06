@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @Slf4j
 public class LoginController {
@@ -22,7 +26,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String postLogin(@ModelAttribute Member member)
+    public String postLogin(@ModelAttribute Member member, HttpServletRequest request)
     {
         Member findMember = loginService.login(member.getLoginId(), member.getPassword());
         //로그인에 실패한경우
@@ -30,6 +34,9 @@ public class LoginController {
             return "login";
 
         //로그인에 성공한경우
+        HttpSession session = request.getSession();
+        session.setAttribute(LoginConst.LOGIN_MEMBER, findMember);
+
         return "loginHome";
     }
 }

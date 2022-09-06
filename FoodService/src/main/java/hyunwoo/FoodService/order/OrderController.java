@@ -1,15 +1,20 @@
 package hyunwoo.FoodService.order;
 
 import hyunwoo.FoodService.domain.FoodStore;
+import hyunwoo.FoodService.domain.Member;
 import hyunwoo.FoodService.domain.MemoryFoodStoreRepository;
 import hyunwoo.FoodService.domain.Menu;
+import hyunwoo.FoodService.login.LoginConst;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +24,7 @@ import static java.util.Arrays.asList;
 public class OrderController {
 
     MemoryFoodStoreRepository foodStoreRepository = new MemoryFoodStoreRepository();
+    OrderService orderService = new OrderService();
 
     @GetMapping("/makeorder")
     public String storeList(Model model){
@@ -33,6 +39,20 @@ public class OrderController {
         List<Menu> menus = foodStoreRepository.findMenuByStoreName(storeName);
         model.addAttribute("menuList", menus);
         return "order/menuList";
+    }
+
+    @PostMapping("/makeorder/{storeName}")
+    public String makeOrder(@PathVariable("storeName") String storeName, @ModelAttribute("menuList") List<Menu> menuList , Model model,
+                            HttpServletRequest request){
+        Member loginMember = (Member)request.getSession().getAttribute(LoginConst.LOGIN_MEMBER);
+        if(loginMember == null)
+        {
+            throw new RuntimeException("로그인 세션 만료");
+        }
+        Date date = new Date();
+        String dateToString = date.toString();
+        orderService.makeOrder(storeName, menuList, dateToString, loginMember);
+        return "order/orderCheck";
     }
 
     private void makeStoreList(Model model) {
