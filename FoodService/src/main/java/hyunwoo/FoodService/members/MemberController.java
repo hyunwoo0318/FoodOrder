@@ -2,6 +2,7 @@ package hyunwoo.FoodService.members;
 
 import hyunwoo.FoodService.domain.Member;
 import hyunwoo.FoodService.domain.MemoryMemberRepository;
+import hyunwoo.FoodService.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @Slf4j
 //회원가입을 위한 컨트롤러
 public class MemberController {
 
     MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();
+    LoginService loginService= new LoginService();
 
     //회원가입화면
     @GetMapping("/members/add")
@@ -27,5 +31,13 @@ public class MemberController {
     public String postAdd(@ModelAttribute Member member){
         memoryMemberRepository.newMember(member);
         return "redirect:/";
+    }
+
+    //자신의 주문목록 확인하는 화면
+    @GetMapping("/mypastorder")
+    public String orderList(){
+        HttpServletRequest request = ;
+        loginService.findLoginMember(request);
+        return "info/orderList";
     }
 }

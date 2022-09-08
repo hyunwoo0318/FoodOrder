@@ -16,6 +16,9 @@ public class MemoryMemberRepository {
     public Member newMember(Member member){
         //멤버마다 고유한 아이디를 배정 ++연산자를 이용
         member.setId(++sequence);
+
+        //회원가입시 새로운 주문기록 리스트를 만들어줘야함
+        member.setOrderRecord(new ArrayList<>());
         store.put(member.getId(), member);
         return member;
     }

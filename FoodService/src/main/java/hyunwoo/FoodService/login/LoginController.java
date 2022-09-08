@@ -37,6 +37,12 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.setAttribute(LoginConst.LOGIN_MEMBER, findMember);
 
+        return "redirect:/loginHome";
+    }
+
+    @GetMapping("/loginHome")
+    public String loginHome(){
         return "loginHome";
     }
+
 }

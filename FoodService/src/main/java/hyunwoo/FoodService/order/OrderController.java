@@ -5,6 +5,7 @@ import hyunwoo.FoodService.domain.Member;
 import hyunwoo.FoodService.domain.MemoryFoodStoreRepository;
 import hyunwoo.FoodService.domain.Menu;
 import hyunwoo.FoodService.login.LoginConst;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import static java.util.Arrays.asList;
 
 @Controller
+@Slf4j
 public class OrderController {
 
     MemoryFoodStoreRepository foodStoreRepository = new MemoryFoodStoreRepository();
@@ -36,14 +38,16 @@ public class OrderController {
 
     @GetMapping("/makeorder/{storeName}")
     public String menuList(@PathVariable("storeName") String storeName, Model model){
+        log.info("get 요청이 왔음");
         List<Menu> menus = foodStoreRepository.findMenuByStoreName(storeName);
         model.addAttribute("menuList", menus);
         return "order/menuList";
     }
 
     @PostMapping("/makeorder/{storeName}")
-    public String makeOrder(@PathVariable("storeName") String storeName, @ModelAttribute("menuList") List<Menu> menuList , Model model,
+    public String makeOrder(@PathVariable("storeName") String storeName, @ModelAttribute("menuList") ArrayList<Menu> menuList , Model model,
                             HttpServletRequest request){
+        log.info("post 요청이 왔음");
         Member loginMember = (Member)request.getSession().getAttribute(LoginConst.LOGIN_MEMBER);
         if(loginMember == null)
         {
