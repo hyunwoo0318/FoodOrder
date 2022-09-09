@@ -2,10 +2,7 @@ package hyunwoo.FoodService.domain;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 //음식점 리스트 리포지토리
 //TODO : 하나의 인터페이스를 만들고 DB를 이용한 레포지토리 클래스를 하나더 만든다. -> 원하는 레포지토리 종류를 골라서 사용할수 있게 할예정
@@ -36,6 +33,15 @@ public class MemoryFoodStoreRepository {
     public List<Menu> findMenuByStoreName(String storeName)
     {
         return findByStoreName(storeName).get().getMenuList();
+    }
+
+    public List<String> findMenuNameByStoreName(String storeName){
+        List<String> menuNameList = new ArrayList<>();
+        List<Menu> menuList = findByStoreName(storeName).get().getMenuList();
+        for (Menu menu : menuList) {
+            menuNameList.add(menu.getMenuName());
+        }
+        return menuNameList;
     }
 
 

@@ -1,9 +1,6 @@
 package hyunwoo.FoodService.order;
 
-import hyunwoo.FoodService.domain.FoodStore;
-import hyunwoo.FoodService.domain.Member;
-import hyunwoo.FoodService.domain.MemoryFoodStoreRepository;
-import hyunwoo.FoodService.domain.Menu;
+import hyunwoo.FoodService.domain.*;
 import hyunwoo.FoodService.login.LoginConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -32,20 +29,21 @@ public class OrderController {
     public String storeList(Model model){
         //임시로 음식점 리스트를 넣어둠
         makeStoreList(model);
-
         return "order/storeList";
     }
 
+    //TODO: List<Menu>로 했을때 타입변환 에러가 나서 일단 String으로 해놓음 전체적인 흐름을 완성하고 변경하기.
     @GetMapping("/makeorder/{storeName}")
     public String menuList(@PathVariable("storeName") String storeName, Model model){
+        model.addAttribute("orderRecord", new OrderRecord());
         log.info("get 요청이 왔음");
-        List<Menu> menus = foodStoreRepository.findMenuByStoreName(storeName);
+        List<String> menus = foodStoreRepository.findMenuNameByStoreName(storeName);
         model.addAttribute("menuList", menus);
         return "order/menuList";
     }
 
     @PostMapping("/makeorder/{storeName}")
-    public String makeOrder(@PathVariable("storeName") String storeName, @ModelAttribute("menuList") ArrayList<Menu> menuList , Model model,
+    public String makeOrder(@PathVariable("storeName") String storeName,@ModelAttribute("orderRecord") OrderRecord orderRecord,
                             HttpServletRequest request){
         log.info("post 요청이 왔음");
         Member loginMember = (Member)request.getSession().getAttribute(LoginConst.LOGIN_MEMBER);
@@ -55,7 +53,7 @@ public class OrderController {
         }
         Date date = new Date();
         String dateToString = date.toString();
-        orderService.makeOrder(storeName, menuList, dateToString, loginMember);
+        orderService.makeOrder(storeName, orderRecord.getOrderedMenu(), dateToString, loginMember);
         return "order/orderCheck";
     }
 

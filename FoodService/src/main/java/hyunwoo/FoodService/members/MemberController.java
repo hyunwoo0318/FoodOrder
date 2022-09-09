@@ -2,6 +2,7 @@ package hyunwoo.FoodService.members;
 
 import hyunwoo.FoodService.domain.Member;
 import hyunwoo.FoodService.domain.MemoryMemberRepository;
+import hyunwoo.FoodService.domain.OrderRecord;
 import hyunwoo.FoodService.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 public class MemberController {
 
     MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();
-    LoginService loginService= new LoginService();
+    MemberService memberService = new MemberService();
 
     //회원가입화면
     @GetMapping("/members/add")
@@ -35,9 +37,13 @@ public class MemberController {
 
     //자신의 주문목록 확인하는 화면
     @GetMapping("/mypastorder")
-    public String orderList(){
-        HttpServletRequest request = ;
-        loginService.findLoginMember(request);
+    public String orderList(Model model,HttpServletRequest request){
+        Member loginMember = memberService.findLoginMember(request);
+        List<OrderRecord> loginMemberOrderRecord = loginMember.getOrderRecord();
+        model.addAttribute("orderList", loginMemberOrderRecord);
+
+        log.info("orderRecord={}" , loginMemberOrderRecord);
+
         return "info/orderList";
     }
 }

@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderService {
 
     MemoryMemberRepository memberRepository = new MemoryMemberRepository();
-    public OrderRecord makeOrder(String storeName, List<Menu> menuList, String date, Member member){
-        OrderRecord orderRecord = new OrderRecord(member.getName(), storeName, date, menuList);
-        Member findMember = memberRepository.findById(member.getId());
-        findMember.getOrderRecord().add(orderRecord);
+    public OrderRecord makeOrder(String storeName, List<String> menuList, String date, Member member){
+        OrderRecord orderRecord = new OrderRecord(storeName, date, menuList);
+        member.getOrderRecord().add(orderRecord);
         return orderRecord;
     }
 
