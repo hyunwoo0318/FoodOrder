@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 
@@ -27,8 +24,8 @@ public class OrderController {
 
     @GetMapping("/makeorder")
     public String storeList(Model model){
-        //임시로 음식점 리스트를 넣어둠
-        makeStoreList(model);
+        Collection<FoodStore> allFoodStore = foodStoreRepository.findAllFoodStore();
+        model.addAttribute("foodStores", allFoodStore);
         return "order/storeList";
     }
 
@@ -57,30 +54,7 @@ public class OrderController {
         return "order/orderCheck";
     }
 
-    private void makeStoreList(Model model) {
-        List<FoodStore> storeList = new ArrayList<>();
-        List<Menu> menuList = new ArrayList<>();
 
-        Menu friedChicken = new Menu("friedChicken", 13000);
-        Menu hotChicken = new Menu("hotChicken", 18000);
-        Menu coke = new Menu("coke", 3000);
-
-        List<Menu> menuChickenList = asList(friedChicken, hotChicken, coke);
-
-        Menu meatPizza = new Menu("meatPizza", 16000);
-        Menu vegPizza = new Menu("vegPizza", 19000);
-        Menu pasta = new Menu("pasta", 60000);
-
-        List<Menu> menuPizzaList = asList(meatPizza, vegPizza, pasta);
-
-        storeList.add(new FoodStore("chicken", "seoul", menuChickenList));
-        storeList.add(new FoodStore("pizza", "yongin", menuPizzaList));
-
-        foodStoreRepository.newFoodStore(new FoodStore("chicken", "seoul", menuChickenList));
-        foodStoreRepository.newFoodStore(new FoodStore("pizza", "yongin", menuPizzaList));
-
-        model.addAttribute("foodStores",storeList);
-    }
 
 
 

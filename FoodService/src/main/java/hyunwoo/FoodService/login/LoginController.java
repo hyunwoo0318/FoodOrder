@@ -20,17 +20,16 @@ public class LoginController {
     LoginService loginService = new LoginService();
 
     @GetMapping("/login")
-    public String getLogin(Model model){
+    public String getLogin(Model model) {
         model.addAttribute("member", new Member());
         return "login";
     }
 
     @PostMapping("/login")
-    public String postLogin(@ModelAttribute Member member, HttpServletRequest request)
-    {
+    public String postLogin(@ModelAttribute Member member, HttpServletRequest request) {
         Member findMember = loginService.login(member.getLoginId(), member.getPassword());
         //로그인에 실패한경우
-        if(findMember == null)
+        if (findMember == null)
             return "login";
 
         //로그인에 성공한경우
@@ -41,8 +40,16 @@ public class LoginController {
     }
 
     @GetMapping("/loginHome")
-    public String loginHome(){
+    public String loginHome() {
         return "loginHome";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(session!= null)
+            session.invalidate();
+
+        return "redirect:/";
+    }
 }

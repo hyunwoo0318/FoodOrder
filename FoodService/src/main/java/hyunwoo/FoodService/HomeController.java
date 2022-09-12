@@ -1,6 +1,7 @@
 package hyunwoo.FoodService;
 
 import hyunwoo.FoodService.domain.Member;
+import hyunwoo.FoodService.domain.MemoryFoodStoreRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
+
 
     @GetMapping("/")
     public String home(@SessionAttribute(name="loginMember", required = false) Member loginMember, HttpServletRequest request,

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+리뷰확인 페이지입니다.
+<table>
+    <th>리뷰 작성자</th>
+    <th>리뷰 내용</th>
+    <tr th:each="review : ${reviews}">
+        <td th:text="${review.id}">리뷰 작성자</td>
+        <td th:text="${review.comment}">리뷰 내용</td>
+    </tr>
+</table>
+<a href="../../loginHome">홈으로</a>
+<a href="../../makeOrder">음식점 선택 화면으로</a>
+</body>
+</html>

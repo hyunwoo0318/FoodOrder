@@ -15,7 +15,11 @@
         <td th:text="${order.storeName}">가게이름</td>
         <td th:text="${order.date}">주문 날짜</td>
         <td th:text="${order.orderedMenu}">주문목록</td>
+        <td>
+            <a th:href="@{../reviews/write/{storeName}(storeName=${order.storeName})}">리뷰작성</a>
+        </td>
     </tr>
 </table>
+<a href="/loginHome">홈으로</a>
 </body>
 </html>

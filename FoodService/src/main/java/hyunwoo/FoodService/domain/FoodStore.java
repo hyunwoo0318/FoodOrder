@@ -21,10 +21,31 @@ public class FoodStore {
         this.storeName = storeName;
         this.pos = pos;
         this.menuList = menuList;
+        this.reviewList = new ArrayList<Review>();
+    }
+
+    public FoodStore(String storeName, String pos) {
+        this.storeName = storeName;
+        this.pos = pos;
+        this.menuList = new ArrayList<Menu>();
+        this.reviewList = new ArrayList<Review>();
+    }
+
+    public FoodStore() {
+        this.menuList = new ArrayList<Menu>();
+        this.reviewList = new ArrayList<Review>();
+    }
+
+    public FoodStore(String storeName, String pos, List<Menu> menuList, List<Review> reviewList) {
+        this.storeName = storeName;
+        this.pos = pos;
+        this.menuList = menuList;
+        this.reviewList = reviewList;
     }
 
     private String storeName;
     private String pos;
     private List<Menu> menuList;
+    private List<Review> reviewList;
 
 }

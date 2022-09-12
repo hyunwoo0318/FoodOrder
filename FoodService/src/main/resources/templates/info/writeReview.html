@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+리뷰 작성 공간입니다.
+<form th:action th:object="${review}" method="post">
+    <div>
+        <label for="comment">한줄리뷰 작성</label>
+        <input type="text" id="comment" th:field="*{comment}" class="form-control"
+               style="text-align:center; width:500px; height:50px;">
+    </div>
+    <div>
+        <button type="submit">리뷰 작성</button>
+    </div>
+</form>
+</body>
+</html>

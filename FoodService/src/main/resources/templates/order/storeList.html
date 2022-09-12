@@ -10,6 +10,7 @@
 <table>
     <th>음식점이름</th>
     <th>위치</th>
+    <th>리뷰 확인</th>
 
 <tr th:each="foodStore : ${foodStores}">
     <td>
@@ -17,6 +18,9 @@
             th:text="${foodStore.storeName}"></a></li>
     </td>
     <td th:text="${foodStore.pos}">위치</td><br>
+    <td>
+        <li><a th:href="@{/reviews/view/{storeName}(storeName=${foodStore.storeName})}">리뷰 확인</a></li>
+    </td>
 </tr>
 </table>
 </body>
