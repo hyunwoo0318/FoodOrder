@@ -7,10 +7,13 @@ import hyunwoo.FoodService.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.naming.Binding;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -30,7 +33,26 @@ public class MemberController {
     }
 
     @PostMapping("/members/add")
-    public String postAdd(@ModelAttribute Member member){
+    public String postAdd(@Validated @ModelAttribute Member member, BindingResult bindingResult){
+
+        if(!bindingResult.hasErrors())
+        {
+            List<String> errors = memberService.validateMemberAdd(member);
+
+            for (String error : errors) {
+                bindingResult.reject(error);
+            }
+        }
+
+
+        //회원가입에 오류가 발생한경우
+        if (bindingResult.hasErrors()) {
+            log.info("bindingErrors={}", bindingResult.getAllErrors());
+            return "members/add";
+        }
+
+        //TODO :오류 메세지를 보여주는 타임리프 수정
+
         memoryMemberRepository.newMember(member);
         return "redirect:/";
     }

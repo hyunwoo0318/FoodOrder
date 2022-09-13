@@ -4,6 +4,8 @@ import hyunwoo.FoodService.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,11 +28,18 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String postLogin(@ModelAttribute Member member, HttpServletRequest request) {
-        Member findMember = loginService.login(member.getLoginId(), member.getPassword());
-        //로그인에 실패한경우
-        if (findMember == null)
+    public String postLogin(@Validated @ModelAttribute Member member, BindingResult bindingResult, HttpServletRequest request) {
+
+        //
+
+
+        //오류가 있는 경우
+        if (bindingResult.hasErrors()) {
+            log.info("bindingError={}", bindingResult.getAllErrors());
             return "login";
+        }
+
+        Member findMember = loginService.login(member.getLoginId(), member.getPassword());
 
         //로그인에 성공한경우
         HttpSession session = request.getSession();

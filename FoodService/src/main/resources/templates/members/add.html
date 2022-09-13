@@ -9,19 +9,32 @@
 <form th:action th:object="${member}" th:method="post">
     <div>
         <label for="loginId">로그인 ID</label>
-            <input type="text" id="loginId" th:field="*{loginId}" class="form-control">
+            <input type="text" id="loginId" th:errorclass="field-error" th:field="*{loginId}" class="form-control">
+        <div class="field-error" th:errors="*{loginId}">
+            아이디 오류
+        </div>
     </div>
     <div>
         <label for="password">비밀번호</label>
-        <input type="text" id="password" th:field="*{password}" class="form-control">
+        <input type="text" id="password"  th:field="*{password}" th:errorclass="field-error" class="form-control">
+        <div class="field-error" th:errors="*{password}">
+            비밀번호 오류
+        </div>
     </div>
     <div>
         <label for="name">이름</label>
-        <input type="text" id="name" th:field="*{name}" class="form-control">
+        <input type="text" id="name" th:field="*{name}"
+               th:errorclass="field-error" class="form-control">
+        <div class="field-error" th:errors="*{name}">
+            이름 오류
+        </div>
     </div>
     <div>
         <label for="phoneNumber">휴대폰번호</label>
-        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control">
+        <input type="text" id="phoneNumber" th:field="*{phoneNumber}"  th:errorclass="field-error" class="form-control">
+        <div class="field-error" th:errors="*{phoneNumber}">
+            전화번호 오류
+        </div>
     </div>
     <div>
         <button type="submit">회원가입</button>
