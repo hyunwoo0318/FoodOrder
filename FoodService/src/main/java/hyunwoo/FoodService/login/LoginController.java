@@ -1,5 +1,6 @@
 package hyunwoo.FoodService.login;
 
+import hyunwoo.FoodService.domain.LoginForm;
 import hyunwoo.FoodService.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,23 +24,25 @@ public class LoginController {
 
     @GetMapping("/login")
     public String getLogin(Model model) {
-        model.addAttribute("member", new Member());
+        model.addAttribute("loginForm", new LoginForm());
         return "login";
     }
 
     @PostMapping("/login")
-    public String postLogin(@Validated @ModelAttribute Member member, BindingResult bindingResult, HttpServletRequest request) {
+    public String postLogin(@Validated @ModelAttribute LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request) {
 
-        //
 
+        Member findMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
+
+        if (findMember == null) {
+            return "login";
+        }
 
         //오류가 있는 경우
         if (bindingResult.hasErrors()) {
             log.info("bindingError={}", bindingResult.getAllErrors());
             return "login";
         }
-
-        Member findMember = loginService.login(member.getLoginId(), member.getPassword());
 
         //로그인에 성공한경우
         HttpSession session = request.getSession();

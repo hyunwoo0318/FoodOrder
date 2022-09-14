@@ -3,6 +3,7 @@ package hyunwoo.FoodService.domain;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,30 +14,30 @@ public class FoodStore {
 
     private Long id;
 
-    public void setMenuList(List<Menu> menuList) {
+    public void setMenuList(Map<String, Integer> menuList) {
         this.menuList = menuList;
     }
 
-    public FoodStore(String storeName, String pos, List<Menu> menuList) {
+    public FoodStore(String storeName, String pos, Map<String, Integer> menuList) {
         this.storeName = storeName;
         this.pos = pos;
-        this.menuList = menuList;
+        this.menuList =menuList;
         this.reviewList = new ArrayList<Review>();
     }
 
     public FoodStore(String storeName, String pos) {
         this.storeName = storeName;
         this.pos = pos;
-        this.menuList = new ArrayList<Menu>();
+        this.menuList = new LinkedHashMap<>();
         this.reviewList = new ArrayList<Review>();
     }
 
     public FoodStore() {
-        this.menuList = new ArrayList<Menu>();
+        this.menuList = new LinkedHashMap<String, Integer>();
         this.reviewList = new ArrayList<Review>();
     }
 
-    public FoodStore(String storeName, String pos, List<Menu> menuList, List<Review> reviewList) {
+    public FoodStore(String storeName, String pos,  Map<String, Integer> menuList, List<Review> reviewList) {
         this.storeName = storeName;
         this.pos = pos;
         this.menuList = menuList;
@@ -45,7 +46,7 @@ public class FoodStore {
 
     private String storeName;
     private String pos;
-    private List<Menu> menuList;
+    private Map<String, Integer> menuList;
     private List<Review> reviewList;
 
 }

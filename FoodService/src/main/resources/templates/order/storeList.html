@@ -14,7 +14,7 @@
 
 <tr th:each="foodStore : ${foodStores}">
     <td>
-        <li><a th:href="@{/makeorder/{storeName}(storeName=${foodStore.storeName})}"
+        <li><a th:href="@{/makeorder/{id}(id=${foodStore.id})}"
             th:text="${foodStore.storeName}"></a></li>
     </td>
     <td th:text="${foodStore.pos}">위치</td><br>

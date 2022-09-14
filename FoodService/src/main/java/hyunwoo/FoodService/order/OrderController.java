@@ -30,17 +30,17 @@ public class OrderController {
     }
 
     //TODO: List<Menu>로 했을때 타입변환 에러가 나서 일단 String으로 해놓음 전체적인 흐름을 완성하고 변경하기.
-    @GetMapping("/makeorder/{storeName}")
-    public String menuList(@PathVariable("storeName") String storeName, Model model){
+    @GetMapping("/makeorder/{id}")
+    public String menuList(@PathVariable("id") Long id, Model model){
         model.addAttribute("orderRecord", new OrderRecord());
         log.info("get 요청이 왔음");
-        List<String> menus = foodStoreRepository.findMenuNameByStoreName(storeName);
+        List<String> menus = foodStoreRepository.findMenuNameById(id);
         model.addAttribute("menuList", menus);
         return "order/menuList";
     }
 
-    @PostMapping("/makeorder/{storeName}")
-    public String makeOrder(@PathVariable("storeName") String storeName,@ModelAttribute("orderRecord") OrderRecord orderRecord,
+    @PostMapping("/makeorder/{id}")
+    public String makeOrder(@PathVariable("id") Long id, @ModelAttribute("orderRecord") OrderRecord orderRecord,
                             HttpServletRequest request){
         log.info("post 요청이 왔음");
         Member loginMember = (Member)request.getSession().getAttribute(LoginConst.LOGIN_MEMBER);
@@ -50,7 +50,8 @@ public class OrderController {
         }
         Date date = new Date();
         String dateToString = date.toString();
-        orderService.makeOrder(storeName, orderRecord.getOrderedMenu(), dateToString, loginMember);
+        String storeName = foodStoreRepository.findById(id).getStoreName();
+       orderService.makeOrder(storeName, orderRecord.getOrderedMenu(), dateToString, loginMember);
         return "order/orderCheck";
     }
 

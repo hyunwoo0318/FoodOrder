@@ -23,17 +23,13 @@ public class ReviewController {
     ReviewService reviewService = new ReviewService();
 
     @GetMapping("write/{storeName}")
-    public String storeReviewList(@PathVariable("storeName") String storeName, Model model){
-        Optional<FoodStore> findStore = foodStoreRepository.findByStoreName(storeName);
-       if(findStore.isEmpty())
-            throw new RuntimeException("존재하지 않는 음식점입니다.");
-        FoodStore foodStore = findStore.get();
+    public String storeReviewList(@PathVariable String storeName, Model model){
         model.addAttribute("review", new Review());
         return "/info/writeReview";
     }
 
     @PostMapping("write/{storeName}")
-    public String submitReivew(@PathVariable("storeName") String storeName, @ModelAttribute("review") Review review,
+    public String submitReivew(@PathVariable String storeName, @ModelAttribute("review") Review review,
                                HttpServletRequest request){
         log.info("submit review POST요청이 옴");
         reviewService.storeReview(request, review.getComment(), storeName);
@@ -47,6 +43,5 @@ public class ReviewController {
         log.info("viewReview GET 요청이 옴");
         return "/info/showReview";
     }
-
 
 }

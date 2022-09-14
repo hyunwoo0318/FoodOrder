@@ -40,4 +40,12 @@ public class MemoryMemberRepository {
                 .findFirst();
     }
 
+    public Member testMemberDataAdd(){
+        Member member = new Member();
+        member.setLoginId("whskwock");
+        member.setPhoneNumber("01085865098");
+        member.setPassword("gusdn123123");
+        member.setName("임현우");
+        return member;
+    }
 }

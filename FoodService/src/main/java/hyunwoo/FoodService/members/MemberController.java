@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -21,6 +23,15 @@ import java.util.List;
 @Slf4j
 //회원가입을 위한 컨트롤러
 public class MemberController {
+
+    //TODO:회원가입시 입력 조건을 보여주게 html파일 수정
+
+    private final MemberValidator memberValidator = new MemberValidator();
+    @InitBinder
+    public void init(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(memberValidator);
+
+    }
 
     MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();
     MemberService memberService = new MemberService();
@@ -35,23 +46,11 @@ public class MemberController {
     @PostMapping("/members/add")
     public String postAdd(@Validated @ModelAttribute Member member, BindingResult bindingResult){
 
-        if(!bindingResult.hasErrors())
-        {
-            List<String> errors = memberService.validateMemberAdd(member);
-
-            for (String error : errors) {
-                bindingResult.reject(error);
-            }
-        }
-
-
         //회원가입에 오류가 발생한경우
         if (bindingResult.hasErrors()) {
             log.info("bindingErrors={}", bindingResult.getAllErrors());
             return "members/add";
         }
-
-        //TODO :오류 메세지를 보여주는 타임리프 수정
 
         memoryMemberRepository.newMember(member);
         return "redirect:/";
