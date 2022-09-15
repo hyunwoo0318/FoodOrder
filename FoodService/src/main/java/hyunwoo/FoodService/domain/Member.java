@@ -48,6 +48,7 @@ public class Member {
     //회원별 주문내역을 저장
     private  List<OrderRecord> orderRecord;
 
+    private MemberClass memberClass;
 
 
 }

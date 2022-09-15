@@ -37,6 +37,13 @@
             전화번호 오류
         </div>
     </div>
+    <div th:each="memberClass : ${memberClasses}" class="form-check form-check-inline">
+        <input type="radio" th:field="*{memberClass}" th:value="${memberClass.name()}" class="form-check-input">
+        <label th:for="${#ids.prev('memberClass')}" th:text="${memberClass.description}"
+               class="form-check-label">
+            고객
+        </label>
+    </div>
     <div>
         <button type="submit">회원가입</button>
     </div>

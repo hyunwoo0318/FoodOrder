@@ -1,6 +1,7 @@
 package hyunwoo.FoodService.members;
 
 import hyunwoo.FoodService.domain.Member;
+import hyunwoo.FoodService.domain.MemberClass;
 import hyunwoo.FoodService.domain.MemoryMemberRepository;
 import hyunwoo.FoodService.domain.OrderRecord;
 import hyunwoo.FoodService.login.LoginService;
@@ -25,6 +26,12 @@ import java.util.List;
 public class MemberController {
 
     //TODO:회원가입시 입력 조건을 보여주게 html파일 수정
+
+    @ModelAttribute("memberClasses")
+    public MemberClass[] setMemberClasses(){
+        return MemberClass.values();
+    }
+
 
     private final MemberValidator memberValidator = new MemberValidator();
     @InitBinder

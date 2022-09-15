@@ -47,8 +47,9 @@ public class MemberValidator implements Validator {
 
     //1. 아이디 -> 첫글자가 숫자인지 아닌지 파악
     public static String findLoginIdError(Member member) {
-        MultiValueMap<String, String> errors = new LinkedMultiValueMap<>();
         String inputLoginID = member.getLoginId();
+        if(inputLoginID.isEmpty())
+            return "";
         if(inputLoginID.charAt(0)-'0' >=0 && inputLoginID.charAt(0)-'0' <= 9)
             return "invalidType";
         return "";
@@ -56,7 +57,7 @@ public class MemberValidator implements Validator {
 
     //2.비밀번호 -> 숫자와 영문이 1개 이상 존재
     public static String findPasswordError(Member member) {
-        Map<String, String> errors = new HashMap<>();
+
         String inputPassword = member.getPassword();
         boolean number = false;
         boolean letter= false;
@@ -81,6 +82,8 @@ public class MemberValidator implements Validator {
     public static List<String> findPhoneNumberError(Member member){
         List<String> errors = new ArrayList<>();
         String inputPhoneNumber = member.getPhoneNumber();
+        if(inputPhoneNumber.isEmpty())
+            return errors;
         String substring = inputPhoneNumber.substring(0, 3);
         if (!substring.equals("010")) {
             errors.add("invalidType");
@@ -98,7 +101,7 @@ public class MemberValidator implements Validator {
 
     //4.이름 -> 문자 외 다른 입력 금지
     public static String findNameError(Member member) {
-        Map<String, String> errors = new HashMap<>();
+
         String inputName = member.getName();
         for(int i=0;i<inputName.length();i++)
         {

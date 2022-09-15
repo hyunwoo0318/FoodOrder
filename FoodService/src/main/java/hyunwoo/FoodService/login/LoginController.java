@@ -29,9 +29,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String postLogin(@Validated @ModelAttribute LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request) {
-
-
+    public String postLogin(@Validated @ModelAttribute LoginForm loginForm, BindingResult bindingResult,
+                            @RequestParam(defaultValue = "/loginHome") String redirectURL, HttpServletRequest request) {
         Member findMember = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
 
         if (findMember == null) {
@@ -48,7 +47,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.setAttribute(LoginConst.LOGIN_MEMBER, findMember);
 
-        return "redirect:/loginHome";
+        return "redirect:" + redirectURL;
     }
 
     @GetMapping("/loginHome")
