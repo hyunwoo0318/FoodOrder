@@ -40,7 +40,7 @@ public class MemoryFoodStoreRepository {
     }
 
     //음식점 이름으로 메뉴 정보 알기
-    public Map<String, Integer> findMenuByStoreName(String storeName)
+    public List<Menu> findMenuByStoreName(String storeName)
     {
         return findByStoreName(storeName).get().getMenuList();
     }
@@ -49,34 +49,28 @@ public class MemoryFoodStoreRepository {
     public List<String> findMenuNameById(Long id){
         List<String> menuNameList = new ArrayList<>();
         FoodStore foo = findById(id);
-        Map<String, Integer> menuList = foo.getMenuList();
-        for (String s : menuList.keySet()) {
-            menuNameList.add(s);
+        List<Menu> menuList = foo.getMenuList();
+        for (Menu menu : menuList) {
+            menuNameList.add(menu.getMenuName());
         }
         return menuNameList;
     }
 
     public void makeStoreList() {
-        List<FoodStore> storeList = new ArrayList<>();
-        List<Menu> menuList = new ArrayList<>();
-
-        Map<String, Integer> chickenMap = new LinkedHashMap<>();
-        Map<String, Integer> pizzaMap = new LinkedHashMap<>();
+        List<Menu> chickenList = new ArrayList<>();
+        List<Menu> pizzaList = new ArrayList<>();
 
 
-        chickenMap.put("friedChicken", 13000);
-        chickenMap.put("hotChicken", 18000);
-        chickenMap.put("coke", 3000);
+       chickenList.add(new Menu("friedChicken", 13000));
+        chickenList.add(new Menu("hotChicken", 18000));
+        chickenList.add(new Menu("coke", 3000));
 
-        pizzaMap.put("meatPizza", 16000);
-        pizzaMap.put("vegPizza", 19000);
-        pizzaMap.put("pasta", 60000);
+        pizzaList.add(new Menu("meatPizza", 16000));
+        pizzaList.add(new Menu("vegPizza", 19000));
+        pizzaList.add(new Menu("pasta", 60000));
 
-        storeList.add(new FoodStore("chicken", "seoul", chickenMap));
-        storeList.add(new FoodStore("pizza", "yongin", pizzaMap));
-
-        newFoodStore(new FoodStore("chicken", "seoul", chickenMap));
-        newFoodStore(new FoodStore("pizza", "yongin", pizzaMap));
+        newFoodStore(new FoodStore("chicken", "seoul", chickenList));
+        newFoodStore(new FoodStore("pizza", "yongin", pizzaList));
     }
 
 }
