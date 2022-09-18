@@ -24,18 +24,17 @@ public class OrderController {
 
     @GetMapping("/makeorder")
     public String storeList(Model model){
-        Collection<FoodStore> allFoodStore = foodStoreRepository.findAllFoodStore();
+        List<FoodStore> allFoodStore = foodStoreRepository.findAllFoodStore();
         model.addAttribute("foodStores", allFoodStore);
         return "order/storeList";
     }
 
-    //TODO: List<Menu>로 했을때 타입변환 에러가 나서 일단 String으로 해놓음 전체적인 흐름을 완성하고 변경하기.
     @GetMapping("/makeorder/{id}")
     public String menuList(@PathVariable("id") Long id, Model model){
         model.addAttribute("orderRecord", new OrderRecord());
         log.info("get 요청이 왔음");
-        List<String> menus = foodStoreRepository.findMenuNameById(id);
-        model.addAttribute("menuList", menus);
+        List<Menu> menuList = foodStoreRepository.findById(id).getMenuList();
+        model.addAttribute("menuList", menuList);
         return "order/menuList";
     }
 

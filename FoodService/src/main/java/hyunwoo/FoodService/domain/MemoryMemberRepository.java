@@ -46,6 +46,7 @@ public class MemoryMemberRepository {
         member.setPhoneNumber("01085865098");
         member.setPassword("gusdn123123");
         member.setName("임현우");
+        member.setMemberClass(MemberClass.OWNER);
         return member;
     }
 }

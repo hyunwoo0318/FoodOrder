@@ -15,30 +15,9 @@ public class FoodStore {
     private String storeName;
     private String pos;
     private List<Menu> menuList = new ArrayList<>();
-    private List<Review> reviewList = new ArrayList<>();
+    private List<Review> reviewList = new ArrayList<>(3);
+    public FoodStore() {}
 
-
-
-
-
-
-
-    public FoodStore(String storeName, String pos) {
-        this.storeName = storeName;
-        this.pos = pos;
-
-    }
-
-    public FoodStore() {
-
-    }
-
-    public FoodStore(String storeName, String pos, List<Menu> menuList, List<Review> reviewList) {
-        this.storeName = storeName;
-        this.pos = pos;
-        this.menuList = menuList;
-        this.reviewList = reviewList;
-    }
 
     public FoodStore(String storeName, String pos, List<Menu> menuList) {
         this.storeName = storeName;

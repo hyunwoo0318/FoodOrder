@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class FoodServiceApplication {
-
 	public static void main(String[] args) {
 		MemoryFoodStoreRepository foodStoreRepository = new MemoryFoodStoreRepository();
 		MemoryMemberRepository memberRepository = new MemoryMemberRepository();

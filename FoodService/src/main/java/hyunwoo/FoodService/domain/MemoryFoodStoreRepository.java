@@ -29,8 +29,8 @@ public class MemoryFoodStoreRepository {
         return store.get(id);
     }
 
-    public Collection<FoodStore> findAllFoodStore(){
-        return store.values();
+    public List<FoodStore> findAllFoodStore(){
+        return new ArrayList<FoodStore>(store.values());
     }
 
     //음식점 이름으로 음식점 정보 알기

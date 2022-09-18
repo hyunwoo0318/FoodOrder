@@ -12,10 +12,10 @@
    <div>메뉴이름</div>
    <div>가격</div>
         <div th:each="menu : ${menuList}" class="form-check form-check-inline">
-            <input type="checkbox" th:field="${orderRecord.orderedMenu}" th:value="${menu}"
+            <input type="checkbox" th:field="*{orderedMenu}" th:value="${menu.menuName}"
                class="form-check-input">
-            <label th:for="${#ids.prev('orderedMenu')}" th:text="${menu}" class="form-check-label">치킨</label>
-
+            <label th:for="${#ids.prev('orderedMenu')}" th:text="${menu.menuName}" class="form-check-label">치킨</label>
+            <div th:text="${menu.price}">가격</div>
     </div>
     <button type="submit">주문 완료</button>
 </form>
